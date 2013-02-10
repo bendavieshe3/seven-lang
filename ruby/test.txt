@@ -1,0 +1,2 @@
+Without a code block you are responsible for closing the file when you are finished with it
+With a code block, the file is automatically closed at the end of the block
