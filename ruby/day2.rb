@@ -60,4 +60,18 @@ puts "\ndo2:\n\n"
 tree = Tree.new 'grandpa' => { 'dad' => {'child 1' => {}, 'child 2' => {} }, 'uncle' => {'child 3' => {}, 'child 4' => {} } } 
 tree.visit_all { |n| puts n.node_name }
 
+puts "\ndo3:\n\n"
+
+phrase = "owl"
+file = "sample_grep_file.txt"
+
+File.open(file, 'r') do | f |
+  l = 0
+  f.each do |line| 
+    l += 1
+    puts "#{l}: #{line}" if line.include?(phrase)
+  end
+end
+
+
 

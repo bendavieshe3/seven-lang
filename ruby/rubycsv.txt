@@ -1,0 +1,4 @@
+id, name, description
+1, lion, a big cat
+2, tiger, another big cat
+3, owl, a big bird that hoots
