@@ -10,5 +10,19 @@
 
 "\nAnswer:" println
 "-------\n" println 
+"Is IO Strongly or weakly typed? Weakly. see code" println
+typeExample := Object clone
+typeExample exampleSlot := 1
+typeExample exampleSlot println
+typeExample exampleSlot := "One"
+typeExample exampleSlot println
 
-1+1
+truthExample := Object clone
+truthExample zeroIsTrue := 0 and true
+truthExample emptyStringIsTrue := "" and true
+truthExample nilIsTrue := nil and true 
+"Truth value of 0 is TRUE. Truth value of empty string is TRUE. Nil is FALSE. See code" println
+
+
+
+
