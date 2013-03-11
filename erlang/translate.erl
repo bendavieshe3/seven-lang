@@ -17,15 +17,28 @@ translate_service() ->
 
 translate_doctor() ->
   process_flag(trap_exit, true),
+  Me = self(),
+  link(Me),
   receive
     {monitor, Process} ->
       link(Process),
       io:format("Monitoring translation service.~n"),
       translate_doctor();
-    {'EXIT', From, Reason} ->
-      io:format("Translation service ~p died with reason ~p.", [From, Reason]),
+
+    % Q2--------------------------------  
+    {'EXIT', Me, Reason} ->
+      io:format("Doctor service ~p died with reason ~p.~n", [Me, Reason]),
+      spawn(fun translate_doctor/0),
+      io:format("Starting Doctor...~n");
+    % /Q2-------------------------------
+
+    {'EXIT', Translator, Reason} ->
+      io:format("Translation service ~p died with reason ~p.~n", [Translator, Reason]),
       self() ! {monitor, spawn(fun translate_service/0)},
-      translate_doctor()
+      io:format("Starting Translation Service...~n"),  
+      translate_doctor();
+    {die} ->
+      exit(told_to_die)
   end.
 
 translate(To, Word) ->
@@ -45,5 +58,11 @@ test() ->
   io:format(translate(Translator, "weird word")),
   io:format("~n"),
   io:format(translate(Translator, "blanca")),
-  io:format("~n").
+  io:format("~n"),
+
+  % Q2 ------------------
+  Doctor ! die,
+  io:format(translate(Translator, "blanca")),
+  io:format("~n").  
+  % Q2 ------------------
 
